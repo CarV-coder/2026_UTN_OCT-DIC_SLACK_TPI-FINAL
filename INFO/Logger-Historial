@@ -1,0 +1,10 @@
+Implementar un logger de las consultas que recibe nuestro servidor, 
+registrar la IP, URL consultada, Endpoint consultado, Metodo, 
+NO REGISTRAR EL BODY, timestamp de consulta, si fuera una consulta que
+requiere autenticacion guardar el user_id.
+
+Si anotar el status de respuesta y tiempo de ejecucion
+
+Agregar en el logger la posibilidad de que en las consultas POST, PUT, DELETE se pueda registrar el body, este body estara encriptado utilizando el LOGGER_PRIVATE_KEY @Backend/src/config/environment.config.js . EXCLUIR EL RESET PASSWORD, LOGIN y REGISTRO de este registro de body por seguridad.
+
+Revisa las rutas excluidas, acabo de probar el login y el BODY quedo registrado, esto representa un fallo grave de seguridad

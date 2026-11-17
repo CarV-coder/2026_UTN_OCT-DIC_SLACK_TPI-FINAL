@@ -1,0 +1,38 @@
+/* ============================================================
+   RegisterScreen.css
+   Estilos propios de la pantalla de registro.
+   Las variables y clases compartidas (auth-page, auth-card,
+   field, btn-primary, form-error...) viven en src/styles/globals.css
+   ============================================================ */
+
+.register-head {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.register-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  color: var(--brand);
+}
+
+.register-subtitle {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ---------- Responsive: teléfonos ---------- */
+
+@media (max-width: 480px) {
+  .register-head {
+    margin-bottom: var(--space-4);
+  }
+
+  .register-title {
+    font-size: 20px;
+  }
+}

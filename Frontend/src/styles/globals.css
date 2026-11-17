@@ -1,0 +1,273 @@
+/* ============================================================
+   globals.css
+   Variables y estilos compartidos de la app (pantallas auth).
+   Estética tipo Slack · Color principal: #481A54
+   Se importa una sola vez en main.jsx.
+   ============================================================ */
+
+:root {
+  /* Paleta de marca */
+  --brand: #481a54;
+  --brand-hover: #5a2368;
+  --brand-dark: #360a40;
+  --brand-soft: #f6edf9;
+  --brand-tint: #f3e7f6;
+
+  /* Texto */
+  --text-primary: #1d1c1d;
+  --text-secondary: #616061;
+  --text-muted: #8f8e94;
+
+  /* Estados */
+  --color-error: #b3261e;
+  --color-error-bg: #fdeaea;
+  --color-success: #076444;
+  --color-success-bg: #e4f3ec;
+
+  /* Superficies y bordes */
+  --surface: #ffffff;
+  --page-bg: #f7f4f8;
+  --border: #d8d3dc;
+  --border-strong: #a99fb0;
+
+  /* Formas y sombras */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-card: 0 2px 6px rgba(29, 28, 29, 0.08), 0 10px 30px rgba(72, 26, 84, 0.12);
+  --ring-focus: 0 0 0 3px rgba(72, 26, 84, 0.22);
+
+  /* Tipografía */
+  --font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+
+  /* Escala de espaciado */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+}
+
+/* ---------- Reset mínimo ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Layout de pantallas de autenticación ---------- */
+
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--space-4);
+  background:
+    radial-gradient(1000px 480px at 85% -10%, rgba(72, 26, 84, 0.14), transparent 60%),
+    radial-gradient(900px 420px at -10% 110%, rgba(72, 26, 84, 0.1), transparent 55%),
+    var(--page-bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--brand-tint);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-6) var(--space-5);
+}
+
+/* ---------- Campos de formulario ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.field-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 16px;
+  /* evita el zoom automático en iOS */
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-input::placeholder {
+  color: var(--text-muted);
+}
+
+.field-input:hover {
+  border-color: var(--border-strong);
+}
+
+.field-input:focus {
+  border-color: var(--brand);
+  box-shadow: var(--ring-focus);
+}
+
+/* ---------- Botón principal ---------- */
+
+.btn-primary {
+  display: inline-block;
+  width: 100%;
+  height: 44px;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-4);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  background: var(--brand);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  background: var(--brand-dark);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- Mensajes de estado ---------- */
+
+.form-error,
+.form-success {
+  display: block;
+  width: 100%;
+  margin: var(--space-3) 0 var(--space-2);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  animation: feedback-in 0.18s ease-out;
+}
+
+.form-error {
+  color: var(--color-error);
+  background: var(--color-error-bg);
+  border: 1px solid rgba(179, 38, 30, 0.25);
+}
+
+.form-success {
+  color: var(--color-success);
+  background: var(--color-success-bg);
+  border: 1px solid rgba(7, 100, 68, 0.25);
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Pie y enlaces ---------- */
+
+.form-footer {
+  margin: var(--space-5) 0 0;
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.link {
+  color: var(--brand);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--brand-dark);
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- Responsive: teléfonos ---------- */
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: var(--space-4) var(--space-3);
+    align-items: start;
+    /* evita que tarjetas más altas que la pantalla se corten arriba */
+  }
+
+  .auth-card {
+    max-width: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .form-footer {
+    margin-top: var(--space-4);
+  }
+}
+
+/* ---------- Accesibilidad: menos movimiento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .field-input,
+  .btn-primary,
+  .link {
+    transition: none;
+  }
+
+  .form-error,
+  .form-success {
+    animation: none;
+  }
+}

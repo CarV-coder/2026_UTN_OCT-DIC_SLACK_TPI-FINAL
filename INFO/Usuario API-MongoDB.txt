@@ -1,0 +1,4 @@
+api-slack
+WpPJljh0NEbuszv6
+
+mongodb+srv://api-slack:WpPJljh0NEbuszv6@cluster0.defe85h.mongodb.net/

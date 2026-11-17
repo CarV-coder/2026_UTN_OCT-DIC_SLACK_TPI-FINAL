@@ -1,0 +1,5 @@
+Vamos a usar swagger UI para implementar una documentacion rubusta de 
+los endpoints de nuestra API, la idea es que documentemos los formatos
+de entrada y salida (todas las posibles salidas) de cada endpoint. 
+Es decir que se enviar (si debe enviar) y que posibles respuestas da 
+el endpoint
