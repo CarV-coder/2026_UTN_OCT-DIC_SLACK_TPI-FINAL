@@ -169,7 +169,8 @@ export async function login(request, response) {
 }
 
 /* 
-Cuando un usuario inicia sesion debemos darle una credencial firmada que nos permita indicar quien es ese usuario para que mas adelante el usuario nos devuelva dicha credencial y poder confiar en ella
+Cuando un usuario inicia sesion debemos darle una credencial firmada que nos permita indicar quien es ese usuario 
+para que mas adelante el usuario nos devuelva dicha credencial y poder confiar en ella
 
 Para poder crear esta credencial firmada usamos JWT (JsonWebTokens)
 Los JWT son objetos de JS (JSON) pasados a string (HS256) con una firma

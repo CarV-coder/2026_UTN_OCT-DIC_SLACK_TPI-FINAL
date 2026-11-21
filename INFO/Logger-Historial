@@ -8,3 +8,32 @@ Si anotar el status de respuesta y tiempo de ejecucion
 Agregar en el logger la posibilidad de que en las consultas POST, PUT, DELETE se pueda registrar el body, este body estara encriptado utilizando el LOGGER_PRIVATE_KEY @Backend/src/config/environment.config.js . EXCLUIR EL RESET PASSWORD, LOGIN y REGISTRO de este registro de body por seguridad.
 
 Revisa las rutas excluidas, acabo de probar el login y el BODY quedo registrado, esto representa un fallo grave de seguridad
+
+-Si lo hace mal la ia poner esto:
+
+Actualmente al consultar a register o login se registra tanto en DB como en consola los body de consulta, cosa que es muy insegura, ya que deja expuestas las credenciales de los usuarios. Queremos excluir los endpoints sensibles (api/auth/login, api/auth/register, api/auth/reset-password, EN GENERAL deberiamos excluir todos los body en la ruta /api/auth/*)
+
+
+Acabo de hacer algunas pruebas, cuando el login falla porque alguna credencial es incorrecta NO registra el body en DB (Lo que esta PERFECTO), pero al enviar las credenciales correctas SI guarda el body, actualmente se genero un registro con id 6afef998ffef8bf5d8e17dff tiene guardado el body_encriptado {
+
+  ip: '::1',
+
+  url: '/api/auth/login',
+
+  endpoint: '/login',
+
+  metodo: 'POST',
+
+  fk_id_usuario: null,
+
+  status_code: NumberInt('200'),
+
+  body_encriptado: 'kiWYzapNrFd5mF9hvGQ9dXwsEnPr5wK+pjWjnV3IxcNq2aaupJs+fVq/cxc0ZGo9R1sEsHmb9CL/qJLuSRj9go/jd+ztUddESkfPJ6PzJvqdePmgwAxPCA==',
+  
+  tiempo_ejecucion_ms: NumberInt('356'),
+
+  timestamp: ISODate('2026-11-19T13:28:56.818Z'),
+
+  __v: NumberInt('0')
+
+}

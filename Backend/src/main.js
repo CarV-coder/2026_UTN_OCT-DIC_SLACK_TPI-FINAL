@@ -78,6 +78,13 @@ app.listen(
     }
 )
 
+/* Problemas Previstos en el despliegue en producción con Vercel: 
+    1. Nombres, letras minusculas y mayusculas, al llamar a un archivo, en local no importa, pero en produccion si importa
+    2. Variables de entorno masl configuradas, en local no importa, pero en produccion si importa
+    3. 
+*/
+
+
 //user_repository.create('test-1', 'test-1@gmail.com', 'test123')
 
 /* user_repository.get()
