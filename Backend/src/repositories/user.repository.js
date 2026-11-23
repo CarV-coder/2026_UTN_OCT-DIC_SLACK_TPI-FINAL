@@ -151,6 +151,15 @@ class UserRepository {
         )
     }
 
+    async updatePasswordById(user_id, password_hash) {
+        return await User.findByIdAndUpdate(
+            user_id,
+            {
+                password: password_hash
+            }
+        )
+    }
+
 }
 
 //El UserRepostory es un sigleton, solo tiene una instancia

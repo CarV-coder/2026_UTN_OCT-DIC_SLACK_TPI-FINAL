@@ -25,8 +25,13 @@ function authMiddleware (request, response, next){
     
         //Verificamos la firma, para ver si coinciden (Si esto falla lanza error)
         //Si todo sale bien podemos leer el contenido que dejamos en ese token
-        const {id, name, email} = jwt.verify(auth_token, ENVIRONMENT.JWT_SECRET_KEY)
+        const {id, name, email, purpose} = jwt.verify(auth_token, ENVIRONMENT.JWT_SECRET_KEY)
         
+        //Solo aceptamos tokens emitidos para iniciar sesion.
+        //Asi un token de verificacion de email o de reseteo no sirve como credencial.
+        if(purpose !== 'auth'){
+            throw new ServerError('Auth token is invalid!', 401)
+        }
 
         //Mutamos la request para que ahora guarde dentro de la nueva propiedad user los datos de la credencial
         request.user = {

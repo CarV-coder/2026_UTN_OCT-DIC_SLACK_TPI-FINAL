@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router'
 import useForm from '../../hooks/useForm'
-import { register } from '../../services/authService'
 import useRequest from '../../hooks/useRequest'
-import './RegisterScreen.css'
+import { register } from '../../services/authService'
+import TextField from '../../Components/Form/TextField'
+import FormButton from '../../Components/Form/FormButton'
+import Alert from '../../Components/Alert/Alert'
 
 function RegisterScreen() {
-
   const initial_state = { name: '', email: '', password: '' }
   const { formState, handleChangeInput } = useForm(initial_state)
   const { loading, response, error, sendRequest } = useRequest()
@@ -19,88 +20,66 @@ function RegisterScreen() {
     console.log('Usuario intenta registrarse', formState)
   }
 
-
   return (
-    <div className='auth-page'>
-      <main className='auth-card'>
-        <div className='register-head'>
-          <h1 className='register-title'>Registro de usuario</h1>
-          <p className='register-subtitle'>
-            Creá tu cuenta y empezá a colaborar con tu equipo.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <div className='field'>
-            <label className='field-label' htmlFor='name'>Nombre:</label>
-            <input
-              className='field-input'
-              name='name'
-              id='name'
-              type='text'
-              autoComplete='name'
-              placeholder='Tu nombre'
-              value={formState.name}
-              onChange={handleChangeInput}
-            />
-          </div>
-
-          <div className='field'>
-            <label className='field-label' htmlFor='email'>Email:</label>
-            <input
-              className='field-input'
-              name='email'
-              id='email'
-              type='email'
-              autoComplete='email'
-              placeholder='tu@email.com'
-              value={formState.email}
-              onChange={handleChangeInput}
-            />
-          </div>
-
-          <div className='field'>
-            <label className='field-label' htmlFor='password'>Password:</label>
-            <input
-              className='field-input'
-              name='password'
-              id='password'
-              type='password'
-              autoComplete='new-password'
-              placeholder='••••••••'
-              value={formState.password}
-              onChange={handleChangeInput}
-            />
-          </div>
-
+    <div className='form-screen'>
+      <div className='form-card'>
+        <img
+          className='form-logo'
+          alt='Slack'
+          height='26'
+          title='Slack'
+          src='https://a.slack-edge.com/bv1-13/slack_logo-97f7334.svg'
+        />
+        <h1 className='form-title'>Registro de usuario</h1>
+        <p className='form-subtitle'>Creá tu cuenta para empezar a usar la app</p>
+        <form className='form-stack' onSubmit={handleSubmit}>
+          <TextField
+            name='name'
+            label='Nombre:'
+            type='text'
+            value={formState.name}
+            onChange={handleChangeInput}
+            autoComplete='name'
+          />
+          <TextField
+            name='email'
+            label='Email:'
+            type='email'
+            value={formState.email}
+            onChange={handleChangeInput}
+            autoComplete='email'
+          />
+          <TextField
+            name='password'
+            label='Password:'
+            type='password'
+            value={formState.password}
+            onChange={handleChangeInput}
+            autoComplete='new-password'
+          />
           {
             error
             &&
             !loading
             &&
-            <span className='form-error' role='alert'>{error}</span>
+            <Alert type='error'>{error}</Alert>
           }
-
-          {
-            loading
-              ? <button className='btn-primary' type='submit' disabled={true}>Cargando...</button>
-              : <button className='btn-primary' type='submit'>Registrarse</button>
-          }
-
+          <FormButton loading={loading} loadingText='Registrando…'>Registrarse</FormButton>
           {
             response
             &&
             !loading
             &&
-            <span className='form-success' role='status'>Registro exitoso</span>
+            <Alert type='success'>
+              Registro exitoso, revisa tu correo electronico para verificar la
+              cuenta
+            </Alert>
           }
         </form>
-
         <p className='form-footer'>
-          ¿Ya tenés una cuenta?{' '}
-          <Link className='link' to='/login'>Iniciá sesión</Link>
+          ¿Ya tenés cuenta? <Link to='/login'>Inicia sesión</Link>
         </p>
-      </main>
+      </div>
     </div>
   )
 }

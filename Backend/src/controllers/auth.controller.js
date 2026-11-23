@@ -4,6 +4,10 @@ import ServerError from "../utils/error.util.js"
 import { compareHash, generateHash } from "../utils/bcrypt.util.js"
 import jwt from "jsonwebtoken"
 import mailer_transporter from "../config/mailer.config.js"
+import {
+    requestPasswordReset,
+    resetPassword as resetPassword_service
+} from "../services/auth.service.js"
 
 /* 
 Para enviar en una request HTTP info a una API usamos el body
@@ -153,9 +157,13 @@ export async function login(request, response) {
             //Aca va a info que queres guardar en la credencial
             id: user._id,
             name: user.nombre,
-            email: user.email
+            email: user.email,
+            purpose: "auth"
         },
-        ENVIRONMENT.JWT_SECRET_KEY //Firmamos con esto
+        ENVIRONMENT.JWT_SECRET_KEY, //Firmamos con esto
+        {
+            expiresIn: '1d' // -> expira en 1 dia
+        }
     )
 
     return response.status(200).send({
@@ -224,4 +232,51 @@ export async function verifyEmail(request, response) {
             message: 'Usuario verificado exitosamente'
         }
     )
+}
+
+/*
+Solicitar el mail de restablecimiento de contraseña.
+Responde siempre lo mismo para no revelar si el email está registrado.
+*/
+export async function forgotPassword(request, response) {
+    const { email } = request.body
+
+    if (!email || typeof email !== "string") {
+        throw new ServerError("Email is required", 400)
+    }
+
+    await requestPasswordReset(email)
+
+    return response.status(200).send({
+        ok: true,
+        status: 200,
+        message: "Si el correo está registrado, te enviamos un enlace para restablecer tu contraseña"
+    })
+}
+
+/*
+Restablecer la contraseña con el token que llegó por mail.
+*/
+export async function resetPassword(request, response) {
+    const { reset_token, password } = request.body
+
+    if (
+        !reset_token
+        ||
+        !password
+        ||
+        typeof reset_token !== "string"
+        ||
+        typeof password !== "string"
+    ) {
+        throw new ServerError("Reset token and password are required", 400)
+    }
+
+    await resetPassword_service(reset_token, password)
+
+    return response.status(200).send({
+        ok: true,
+        status: 200,
+        message: "Contraseña restablecida correctamente"
+    })
 }
